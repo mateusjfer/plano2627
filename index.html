@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.3">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="pt-br"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Rastreador Bíblico Pro - Mateus&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.chapter-btn {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.chapter-btn.done {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #10b981 !important;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: white !important;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-color: #059669 !important;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.book-section {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.book-section.active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: grid;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Scrollbar suave para os filtros */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.scrollbar-hide::-webkit-scrollbar { display: none; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="bg-slate-50 min-h-screen text-slate-900 font-sans pb-20"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-slate-200 z-50 p-4 shadow-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="max-w-2xl mx-auto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex justify-between items-center mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h1 class="text-xl font-bold text-slate-800 flex items-center gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-2xl"&gt;📖&lt;/span&gt; Plano 2 Anos</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span id="date-info" class="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded uppercase tracking-tighter"&gt;2026 • 2027&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="space-y-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex justify-between items-end"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex flex-col"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="text-3xl font-black text-emerald-600 leading-none" id="percent-label"&gt;0%&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="text-[10px] uppercase tracking-wider text-slate-400 font-bold mt-1"&gt;Concluído&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-right"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="text-sm font-bold text-slate-700" id="count-label"&gt;0 / 1189&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-[10px] text-slate-400 font-medium"&gt;capítulos lidos&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div id="main-progress-bar" class="bg-emerald-500 h-full rounded-full transition-all duration-1000 ease-out" style="width: 0%"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="status-card" class="mt-4 p-3 rounded-xl border flex flex-col gap-1 cursor-pointer hover:brightness-95 transition" onclick="scrollToNext()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span id="next-chapter-text" class="text-sm font-bold text-slate-700 underline decoration-emerald-400 decoration-2 underline-offset-4"&gt;Próximo: Carregando...&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span id="pace-text" class="text-[11px] font-medium opacity-80"&gt;Calculando ritmo...&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;main class="max-w-2xl mx-auto p-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="flex gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button onclick="filterBooks(event, 'all')" class="filter-btn bg-slate-800 text-white text-xs px-4 py-2 rounded-full font-bold whitespace-nowrap shadow-md"&gt;Tudo&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button onclick="filterBooks(event, 'at')" class="filter-btn bg-white border border-slate-200 text-slate-600 text-xs px-4 py-2 rounded-full font-bold whitespace-nowrap shadow-sm"&gt;Antigo Testamento&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button onclick="filterBooks(event, 'nt')" class="filter-btn bg-white border border-slate-200 text-slate-600 text-xs px-4 py-2 rounded-full font-bold whitespace-nowrap shadow-sm"&gt;Novo Testamento&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="bible-container" class="space-y-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="mt-12 py-8 border-t border-slate-200 text-center text-slate-400"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-[10px] mb-4 uppercase tracking-widest font-bold"&gt;Configurações de Dados&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button onclick="resetData()" class="px-4 py-2 border border-slate-200 rounded-lg text-xs hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-all font-bold"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Reiniciar Todo o Progresso</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const bible = [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "Gênesis", c: 50, t: "at" }, { n: "Êxodo", c: 40, t: "at" }, { n: "Levítico", c: 27, t: "at" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "Números", c: 36, t: "at" }, { n: "Deuteronômio", c: 34, t: "at" }, { n: "Josué", c: 24, t: "at" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "Juízes", c: 21, t: "at" }, { n: "Rute", c: 4, t: "at" }, { n: "1 Samuel", c: 31, t: "at" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "2 Samuel", c: 24, t: "at" }, { n: "1 Reis", c: 22, t: "at" }, { n: "2 Reis", c: 25, t: "at" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "1 Crônicas", c: 29, t: "at" }, { n: "2 Crônicas", c: 36, t: "at" }, { n: "Esdras", c: 10, t: "at" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "Neemias", c: 13, t: "at" }, { n: "Ester", c: 10, t: "at" }, { n: "Jó", c: 42, t: "at" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "Salmos", c: 150, t: "at" }, { n: "Provérbios", c: 31, t: "at" }, { n: "Eclesiastes", c: 12, t: "at" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "Cânticos", c: 8, t: "at" }, { n: "Isaías", c: 66, t: "at" }, { n: "Jeremias", c: 52, t: "at" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "Lamentações", c: 5, t: "at" }, { n: "Ezequiel", c: 48, t: "at" }, { n: "Daniel", c: 12, t: "at" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "Oséias", c: 14, t: "at" }, { n: "Joel", c: 3, t: "at" }, { n: "Amós", c: 9, t: "at" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "Obadias", c: 1, t: "at" }, { n: "Jonas", c: 4, t: "at" }, { n: "Miquéias", c: 7, t: "at" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "Naum", c: 3, t: "at" }, { n: "Habacuque", c: 3, t: "at" }, { n: "Sofonias", c: 3, t: "at" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "Ageu", c: 2, t: "at" }, { n: "Zacarias", c: 14, t: "at" }, { n: "Malaquias", c: 4, t: "at" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "Mateus", c: 28, t: "nt" }, { n: "Marcos", c: 16, t: "nt" }, { n: "Lucas", c: 24, t: "nt" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "João", c: 21, t: "nt" }, { n: "Atos", c: 28, t: "nt" }, { n: "Romanos", c: 16, t: "nt" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "1 Coríntios", c: 16, t: "nt" }, { n: "2 Coríntios", c: 13, t: "nt" }, { n: "Gálatas", c: 6, t: "nt" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "Efésios", c: 6, t: "nt" }, { n: "Filipenses", c: 4, t: "nt" }, { n: "Colossenses", c: 4, t: "nt" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "1 Tessalonicenses", c: 5, t: "nt" }, { n: "2 Tessalonicenses", c: 3, t: "nt" }, { n: "1 Timóteo", c: 6, t: "nt" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "2 Timóteo", c: 4, t: "nt" }, { n: "Tito", c: 3, t: "nt" }, { n: "Filemom", c: 1, t: "nt" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "Hebreus", c: 13, t: "nt" }, { n: "Tiago", c: 5, t: "nt" }, { n: "1 Pedro", c: 5, t: "nt" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "2 Pedro", c: 3, t: "nt" }, { n: "1 João", c: 5, t: "nt" }, { n: "2 João", c: 1, t: "nt" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "3 João", c: 1, t: "nt" }, { n: "Judas", c: 1, t: "nt" }, { n: "Apocalipse", c: 22, t: "nt" }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>let db = JSON.parse(localStorage.getItem('reading_progress_mateus')) || {};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let currentNextBook = "";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function render() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const container = document.getElementById('bible-container');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>container.innerHTML = '';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>bible.forEach((book, idx) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const card = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>card.className = `book-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-300`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>card.dataset.type = book.t;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>card.id = `book-${book.n.replace(/\s/g, '')}`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>let completedInBook = 0;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let chHtml = '';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>for(let i=1; i&lt;=book.c; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const key = `${book.n}-${i}`;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const isDone = db[key];</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if(isDone) completedInBook++;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>chHtml += `</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button onclick="toggle('${book.n}', ${i}, this)"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>id="btn-${key}"</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>class="chapter-btn ${isDone ? 'done' : ''} w-full aspect-square text-[10px] font-bold border border-slate-100 rounded-lg bg-slate-50 flex items-center justify-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>${i}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const bookProgress = Math.round((completedInBook / book.c) * 100);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>card.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div onclick="toggleBook(this)" class="p-4 flex justify-between items-center cursor-pointer hover:bg-slate-50 transition"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h3 class="font-bold text-slate-700"&gt;${book.n}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex items-center gap-2 mt-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="w-16 bg-slate-100 h-1.5 rounded-full overflow-hidden"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div class="bg-emerald-400 h-full rounded-full transition-all" style="width: ${bookProgress}%"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-[9px] text-slate-400 font-bold uppercase tracking-tighter"&gt;${bookProgress}%&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="text-xs font-black text-slate-300"&gt;${completedInBook} / ${book.c}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="book-section p-4 pt-0 grid grid-cols-6 sm:grid-cols-10 gap-2 border-t border-slate-50 bg-slate-50/50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>${chHtml}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>container.appendChild(card);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateStats();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function toggle(book, ch, el) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const key = `${book}-${ch}`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(db[key]) delete db[key];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>else db[key] = true;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>localStorage.setItem('reading_progress_mateus', JSON.stringify(db));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>el.classList.toggle('done');</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Atualizar contadores do card</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const card = el.closest('.book-card');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const bookData = bible.find(b =&gt; b.n === book);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let doneCount = 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>for(let i=1; i&lt;=bookData.c; i++) { if(db[`${book}-${i}`]) doneCount++; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const p = Math.round((doneCount / bookData.c) * 100);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>card.querySelector('.bg-emerald-400').style.width = p + '%';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>card.querySelector('.text-[9px]').innerText = p + '%';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>card.querySelector('.text-xs').innerText = `${doneCount} / ${bookData.c}`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateStats();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function updateStats() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const total = 1189;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const done = Object.keys(db).length;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const p = (done / total) * 100;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('main-progress-bar').style.width = p + '%';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('percent-label').innerText = Math.floor(p) + '%';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('count-label').innerText = `${done} / ${total}`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Próxima leitura</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let next = "Concluído!";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>currentNextBook = "";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>for(let b of bible) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let found = false;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>for(let i=1; i&lt;=b.c; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if(!db[`${b.n}-${i}`]) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>next = `${b.n} ${i}`;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>currentNextBook = b.n;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>found = true;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>break;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if(found) break;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('next-chapter-text').innerText = "Próximo: " + next;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Lógica de Datas (Início: 05/01/2026 | Fim: 31/12/2027)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const start = new Date('2026-01-05T00:00:00');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const end = new Date('2027-12-31T23:59:59');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const now = new Date();</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const totalMs = end - start;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const elapsedMs = now - start;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (now &lt; start) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('pace-text').innerText = "O plano começa em 05/01/2026. Prepare-se!";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('status-card').className = "mt-4 p-3 rounded-xl border border-blue-100 bg-blue-50 text-blue-700 font-bold";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const idealPercent = Math.min(elapsedMs / totalMs, 1);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const idealDone = Math.floor(idealPercent * total);</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (done &gt;= idealDone) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>document.getElementById('pace-text').innerText = "Você está no ritmo ideal! Parabéns.";</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>document.getElementById('status-card').className = "mt-4 p-3 rounded-xl border border-emerald-100 bg-emerald-50 text-emerald-700 font-bold";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const diff = idealDone - done;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>document.getElementById('pace-text').innerText = `Atraso de ${diff} capítulos. Clique para ler!`;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>document.getElementById('status-card').className = "mt-4 p-3 rounded-xl border border-amber-100 bg-amber-50 text-amber-700 font-bold";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function toggleBook(el) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const section = el.nextElementSibling;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const isActive = section.classList.contains('active');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.querySelectorAll('.book-section').forEach(s =&gt; s.classList.remove('active'));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(!isActive) section.classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function scrollToNext() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(!currentNextBook) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const id = `book-${currentNextBook.replace(/\s/g, '')}`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const el = document.getElementById(id);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(el) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Filtra para "Tudo" para garantir que o livro apareça</p>
+<p class="p1"><span class="Apple-converted-space">                </span>filterBooks(null, 'all');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>el.scrollIntoView({ behavior: 'smooth', block: 'center' });</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const section = el.querySelector('.book-section');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if(!section.classList.contains('active')) toggleBook(el.firstElementChild);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function filterBooks(event, type) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.querySelectorAll('.book-card').forEach(card =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>card.style.display = (type === 'all' || card.dataset.type === type) ? 'block' : 'none';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(event) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.querySelectorAll('.filter-btn').forEach(b =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>b.className = "filter-btn bg-white border border-slate-200 text-slate-600 text-xs px-4 py-2 rounded-full font-bold whitespace-nowrap shadow-sm";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                </span>event.currentTarget.className = "filter-btn bg-slate-800 text-white text-xs px-4 py-2 rounded-full font-bold whitespace-nowrap shadow-md";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function resetData() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(confirm("Mateus, isso apagará todo o seu progresso de leitura. Confirmar reset?")) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>db = {};</p>
+<p class="p1"><span class="Apple-converted-space">                </span>localStorage.removeItem('reading_progress_mateus');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>render();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Inicialização</p>
+<p class="p1"><span class="Apple-converted-space">        </span>render();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
