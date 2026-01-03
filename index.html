@@ -3,25 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rastreador Bíblico Pro - Mateus</title>
+    <title>Bíblia 2 Anos - Mateus</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .chapter-btn {
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        .chapter-btn { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .chapter-btn.done { 
+            background-color: #10b981 !important; 
+            color: white !important; 
+            border-color: #059669 !important; 
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); 
         }
-        .chapter-btn.done {
-            background-color: #10b981 !important;
-            color: white !important;
-            border-color: #059669 !important;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .book-section {
-            display: none;
-        }
-        .book-section.active {
-            display: grid;
-        }
-        /* Scrollbar suave para os filtros */
+        .book-section { display: none; }
+        .book-section.active { display: grid; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -31,17 +24,15 @@
     <header class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-slate-200 z-50 p-4 shadow-sm">
         <div class="max-w-2xl mx-auto">
             <div class="flex justify-between items-center mb-4">
-                <h1 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                    <span class="text-2xl">📖</span> Plano 2 Anos
-                </h1>
-                <span id="date-info" class="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded uppercase tracking-tighter">2026 • 2027</span>
+                <h1 class="text-xl font-bold text-slate-800 flex items-center gap-2">📖 Plano 2 Anos</h1>
+                <span class="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded">2026 • 2027</span>
             </div>
 
             <div class="space-y-2">
                 <div class="flex justify-between items-end">
                     <div class="flex flex-col">
                         <span class="text-3xl font-black text-emerald-600 leading-none" id="percent-label">0%</span>
-                        <span class="text-[10px] uppercase tracking-wider text-slate-400 font-bold mt-1">Concluído</span>
+                        <span class="text-[10px] uppercase tracking-wider text-slate-400 font-bold mt-1">Progresso Total</span>
                     </div>
                     <div class="text-right">
                         <span class="text-sm font-bold text-slate-700" id="count-label">0 / 1189</span>
@@ -54,7 +45,7 @@
             </div>
 
             <div id="status-card" class="mt-4 p-3 rounded-xl border flex flex-col gap-1 cursor-pointer hover:brightness-95 transition" onclick="scrollToNext()">
-                <span id="next-chapter-text" class="text-sm font-bold text-slate-700 underline decoration-emerald-400 decoration-2 underline-offset-4">Próximo: Carregando...</span>
+                <span id="next-chapter-text" class="text-sm font-bold text-slate-700 underline decoration-emerald-400 decoration-2 underline-offset-4">Carregando...</span>
                 <span id="pace-text" class="text-[11px] font-medium opacity-80">Calculando ritmo...</span>
             </div>
         </div>
@@ -63,17 +54,25 @@
     <main class="max-w-2xl mx-auto p-4">
         <div class="flex gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
             <button onclick="filterBooks(event, 'all')" class="filter-btn bg-slate-800 text-white text-xs px-4 py-2 rounded-full font-bold whitespace-nowrap shadow-md">Tudo</button>
-            <button onclick="filterBooks(event, 'at')" class="filter-btn bg-white border border-slate-200 text-slate-600 text-xs px-4 py-2 rounded-full font-bold whitespace-nowrap shadow-sm">Antigo Testamento</button>
-            <button onclick="filterBooks(event, 'nt')" class="filter-btn bg-white border border-slate-200 text-slate-600 text-xs px-4 py-2 rounded-full font-bold whitespace-nowrap shadow-sm">Novo Testamento</button>
+            <button onclick="filterBooks(event, 'at')" class="filter-btn bg-white border border-slate-200 text-slate-600 text-xs px-4 py-2 rounded-full font-bold whitespace-nowrap shadow-sm">Antigo</button>
+            <button onclick="filterBooks(event, 'nt')" class="filter-btn bg-white border border-slate-200 text-slate-600 text-xs px-4 py-2 rounded-full font-bold whitespace-nowrap shadow-sm">Novo</button>
         </div>
 
-        <div id="bible-container" class="space-y-3">
-            </div>
+        <div id="bible-container" class="space-y-3"></div>
 
-        <div class="mt-12 py-8 border-t border-slate-200 text-center text-slate-400">
-            <p class="text-[10px] mb-4 uppercase tracking-widest font-bold">Configurações de Dados</p>
-            <button onclick="resetData()" class="px-4 py-2 border border-slate-200 rounded-lg text-xs hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-all font-bold">
-                Reiniciar Todo o Progresso
+        <div class="mt-12 py-8 border-t border-slate-200 text-center">
+            <p class="text-[10px] mb-4 uppercase tracking-widest font-bold text-slate-400">Sincronização de Segurança (Backup)</p>
+            <div class="flex flex-col gap-3">
+                <button onclick="exportData()" class="w-full py-3 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 transition flex items-center justify-center gap-2">
+                    📤 Copiar Código de Backup
+                </button>
+                <button onclick="importData()" class="w-full py-3 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 transition flex items-center justify-center gap-2">
+                    📥 Restaurar com Código
+                </button>
+            </div>
+            
+            <button onclick="resetData()" class="mt-12 text-[10px] text-slate-300 hover:text-red-500 transition uppercase font-bold tracking-tighter">
+                Reiniciar Tudo
             </button>
         </div>
     </main>
@@ -110,47 +109,20 @@
         function render() {
             const container = document.getElementById('bible-container');
             container.innerHTML = '';
-
-            bible.forEach((book, idx) => {
+            bible.forEach(book => {
                 const card = document.createElement('div');
-                card.className = `book-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-300`;
+                card.className = `book-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all`;
                 card.dataset.type = book.t;
                 card.id = `book-${book.n.replace(/\s/g, '')}`;
-
-                let completedInBook = 0;
+                let doneInBook = 0;
                 let chHtml = '';
                 for(let i=1; i<=book.c; i++) {
-                    const key = `${book.n}-${i}`;
-                    const isDone = db[key];
-                    if(isDone) completedInBook++;
-                    chHtml += `
-                        <button onclick="toggle('${book.n}', ${i}, this)" 
-                                id="btn-${key}"
-                                class="chapter-btn ${isDone ? 'done' : ''} w-full aspect-square text-[10px] font-bold border border-slate-100 rounded-lg bg-slate-50 flex items-center justify-center">
-                            ${i}
-                        </button>
-                    `;
+                    const isDone = db[`${book.n}-${i}`];
+                    if(isDone) doneInBook++;
+                    chHtml += `<button onclick="toggle('${book.n}', ${i}, this)" class="chapter-btn ${isDone ? 'done' : ''} w-full aspect-square text-[10px] font-bold border border-slate-100 rounded-lg bg-slate-50 flex items-center justify-center">${i}</button>`;
                 }
-
-                const bookProgress = Math.round((completedInBook / book.c) * 100);
-
-                card.innerHTML = `
-                    <div onclick="toggleBook(this)" class="p-4 flex justify-between items-center cursor-pointer hover:bg-slate-50 transition">
-                        <div>
-                            <h3 class="font-bold text-slate-700">${book.n}</h3>
-                            <div class="flex items-center gap-2 mt-1">
-                                <div class="w-16 bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-emerald-400 h-full rounded-full transition-all" style="width: ${bookProgress}%"></div>
-                                </div>
-                                <span class="text-[9px] text-slate-400 font-bold uppercase tracking-tighter">${bookProgress}%</span>
-                            </div>
-                        </div>
-                        <span class="text-xs font-black text-slate-300">${completedInBook} / ${book.c}</span>
-                    </div>
-                    <div class="book-section p-4 pt-0 grid grid-cols-6 sm:grid-cols-10 gap-2 border-t border-slate-50 bg-slate-50/50">
-                        ${chHtml}
-                    </div>
-                `;
+                const p = Math.round((doneInBook/book.c)*100);
+                card.innerHTML = `<div onclick="toggleBook(this)" class="p-4 flex justify-between items-center cursor-pointer hover:bg-slate-50"><div><h3 class="font-bold text-slate-700">${book.n}</h3><div class="flex items-center gap-2 mt-1"><div class="w-16 bg-slate-100 h-1.5 rounded-full overflow-hidden"><div class="bg-emerald-400 h-full rounded-full transition-all" style="width: ${p}%"></div></div><span class="text-[9px] text-slate-400 font-bold tracking-tighter">${p}%</span></div></div><span class="text-xs font-black text-slate-300">${doneInBook}/${book.c}</span></div><div class="book-section p-4 pt-0 grid grid-cols-6 sm:grid-cols-10 gap-2 border-t border-slate-50 bg-slate-50/50">${chHtml}</div>`;
                 container.appendChild(card);
             });
             updateStats();
@@ -158,75 +130,66 @@
 
         function toggle(book, ch, el) {
             const key = `${book}-${ch}`;
-            if(db[key]) delete db[key];
-            else db[key] = true;
-            
+            db[key] ? delete db[key] : db[key] = true;
             localStorage.setItem('reading_progress_mateus', JSON.stringify(db));
             el.classList.toggle('done');
-            
-            // Atualizar contadores do card
             const card = el.closest('.book-card');
             const bookData = bible.find(b => b.n === book);
-            let doneCount = 0;
-            for(let i=1; i<=bookData.c; i++) { if(db[`${book}-${i}`]) doneCount++; }
-            const p = Math.round((doneCount / bookData.c) * 100);
+            let done = 0;
+            for(let i=1; i<=bookData.c; i++) if(db[`${book}-${i}`]) done++;
+            const p = Math.round((done/bookData.c)*100);
             card.querySelector('.bg-emerald-400').style.width = p + '%';
             card.querySelector('.text-[9px]').innerText = p + '%';
-            card.querySelector('.text-xs').innerText = `${doneCount} / ${bookData.c}`;
-
+            card.querySelector('.text-xs').innerText = `${done}/${bookData.c}`;
             updateStats();
         }
 
         function updateStats() {
-            const total = 1189;
             const done = Object.keys(db).length;
-            const p = (done / total) * 100;
-
+            const p = (done / 1189) * 100;
             document.getElementById('main-progress-bar').style.width = p + '%';
             document.getElementById('percent-label').innerText = Math.floor(p) + '%';
-            document.getElementById('count-label').innerText = `${done} / ${total}`;
-
-            // Próxima leitura
-            let next = "Concluído!";
-            currentNextBook = "";
+            document.getElementById('count-label').innerText = `${done} / 1189`;
+            let next = "Concluído!"; currentNextBook = "";
             for(let b of bible) {
                 let found = false;
-                for(let i=1; i<=b.c; i++) {
-                    if(!db[`${b.n}-${i}`]) {
-                        next = `${b.n} ${i}`;
-                        currentNextBook = b.n;
-                        found = true;
-                        break;
-                    }
-                }
+                for(let i=1; i<=b.c; i++) { if(!db[`${b.n}-${i}`]) { next = `${b.n} ${i}`; currentNextBook = b.n; found = true; break; } }
                 if(found) break;
             }
             document.getElementById('next-chapter-text').innerText = "Próximo: " + next;
-
-            // Lógica de Datas (Início: 05/01/2026 | Fim: 31/12/2027)
-            const start = new Date('2026-01-05T00:00:00');
-            const end = new Date('2027-12-31T23:59:59');
-            const now = new Date();
-            
-            const totalMs = end - start;
-            const elapsedMs = now - start;
-            
+            const start = new Date('2026-01-05T00:00:00'); const now = new Date();
+            const elapsed = now - start;
             if (now < start) {
-                document.getElementById('pace-text').innerText = "O plano começa em 05/01/2026. Prepare-se!";
+                document.getElementById('pace-text').innerText = "Início em 05/01/2026.";
                 document.getElementById('status-card').className = "mt-4 p-3 rounded-xl border border-blue-100 bg-blue-50 text-blue-700 font-bold";
             } else {
-                const idealPercent = Math.min(elapsedMs / totalMs, 1);
-                const idealDone = Math.floor(idealPercent * total);
-                
-                if (done >= idealDone) {
-                    document.getElementById('pace-text').innerText = "Você está no ritmo ideal! Parabéns.";
+                const ideal = Math.floor((elapsed / (2 * 365 * 24 * 60 * 60 * 1000)) * 1189);
+                if (done >= ideal) {
+                    document.getElementById('pace-text').innerText = "Você está no ritmo ideal!";
                     document.getElementById('status-card').className = "mt-4 p-3 rounded-xl border border-emerald-100 bg-emerald-50 text-emerald-700 font-bold";
                 } else {
-                    const diff = idealDone - done;
-                    document.getElementById('pace-text').innerText = `Atraso de ${diff} capítulos. Clique para ler!`;
+                    document.getElementById('pace-text').innerText = `Atraso de ${ideal - done} capítulos.`;
                     document.getElementById('status-card').className = "mt-4 p-3 rounded-xl border border-amber-100 bg-amber-50 text-amber-700 font-bold";
                 }
             }
+        }
+
+        function exportData() {
+            const data = localStorage.getItem('reading_progress_mateus');
+            if(!data || data === '{}') { alert("Sem progresso!"); return; }
+            const code = btoa(data);
+            navigator.clipboard.writeText(code).then(() => alert("Código de Backup Copiado! Cole no seu Notion.")).catch(() => prompt("Copie este código:", code));
+        }
+
+        function importData() {
+            const code = prompt("Cole o código de backup:");
+            if(!code) return;
+            try {
+                const decoded = atob(code);
+                JSON.parse(decoded);
+                localStorage.setItem('reading_progress_mateus', decoded);
+                location.reload();
+            } catch(e) { alert("Código inválido!"); }
         }
 
         function toggleBook(el) {
@@ -238,39 +201,20 @@
 
         function scrollToNext() {
             if(!currentNextBook) return;
-            const id = `book-${currentNextBook.replace(/\s/g, '')}`;
-            const el = document.getElementById(id);
-            if(el) {
-                // Filtra para "Tudo" para garantir que o livro apareça
-                filterBooks(null, 'all');
-                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                const section = el.querySelector('.book-section');
-                if(!section.classList.contains('active')) toggleBook(el.firstElementChild);
-            }
+            filterBooks(null, 'all');
+            const el = document.getElementById(`book-${currentNextBook.replace(/\s/g, '')}`);
+            if(el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); toggleBook(el.firstElementChild); }
         }
 
         function filterBooks(event, type) {
-            document.querySelectorAll('.book-card').forEach(card => {
-                card.style.display = (type === 'all' || card.dataset.type === type) ? 'block' : 'none';
-            });
-
+            document.querySelectorAll('.book-card').forEach(c => c.style.display = (type === 'all' || c.dataset.type === type) ? 'block' : 'none');
             if(event) {
-                document.querySelectorAll('.filter-btn').forEach(b => {
-                    b.className = "filter-btn bg-white border border-slate-200 text-slate-600 text-xs px-4 py-2 rounded-full font-bold whitespace-nowrap shadow-sm";
-                });
+                document.querySelectorAll('.filter-btn').forEach(b => b.className = "filter-btn bg-white border border-slate-200 text-slate-600 text-xs px-4 py-2 rounded-full font-bold whitespace-nowrap shadow-sm");
                 event.currentTarget.className = "filter-btn bg-slate-800 text-white text-xs px-4 py-2 rounded-full font-bold whitespace-nowrap shadow-md";
             }
         }
 
-        function resetData() {
-            if(confirm("Mateus, isso apagará todo o seu progresso de leitura. Confirmar reset?")) {
-                db = {};
-                localStorage.removeItem('reading_progress_mateus');
-                render();
-            }
-        }
-
-        // Inicialização
+        function resetData() { if(confirm("Apagar tudo?")) { localStorage.removeItem('reading_progress_mateus'); location.reload(); } }
         render();
     </script>
 </body>
